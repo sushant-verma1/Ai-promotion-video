@@ -9,7 +9,6 @@ import {
 import fs from "fs";
 import ai from "../config/ai.js";
 import axios from "axios";
-import { arrayBuffer } from "stream/consumers";
 import path from "path";
 
 const loadImage = (path: string, mimeType: string) => {
