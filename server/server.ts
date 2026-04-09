@@ -11,10 +11,17 @@ const app = express();
 // Middleware
 app.post('/api/clerk', express.raw({type: 'application/json'}) , clerkWebhooks)
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://ai-promotion-video.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    if (
+      !origin ||
+      origin.includes("vercel.app") ||   // ✅ allow all Vercel deployments
+      origin.includes("localhost")
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
